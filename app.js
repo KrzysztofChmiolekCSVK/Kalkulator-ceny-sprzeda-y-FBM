@@ -38,7 +38,7 @@ const MARKET_INFO = [
   { code: "IE", name: "Irlandia", currency: "EUR" },
   { code: "UK", name: "Wielka Brytania", currency: "GBP" },
   { code: "PL", name: "Polska", currency: "PLN" },
-  { code: "SE", name: "Szwecja", currency: "EUR" },
+  { code: "SE", name: "Szwecja", currency: "SEK" },
 ];
 
 const WEIGHT_OPTIONS = [1, 2, 3, 5, 10, 15, 20, 25, 30, 40];
@@ -52,6 +52,7 @@ const inputs = {
   otherCostPln: document.querySelector("#otherCostPln"),
   eurRate: document.querySelector("#eurRate"),
   gbpRate: document.querySelector("#gbpRate"),
+  sekRate: document.querySelector("#sekRate"),
 };
 
 const resultsBody = document.querySelector("#resultsBody");
@@ -108,6 +109,9 @@ function convertPlnToCurrency(plnValue, currency) {
   if (currency === "GBP") {
     return plnValue / getNumericValue(inputs.gbpRate, 4.9);
   }
+  if (currency === "SEK") {
+    return plnValue / getNumericValue(inputs.sekRate, 0.39);
+  }
   return plnValue;
 }
 
@@ -121,6 +125,8 @@ function convertCurrency(value, fromCurrency, toCurrency) {
     valueInPln = value * getNumericValue(inputs.eurRate, 4.25);
   } else if (fromCurrency === "GBP") {
     valueInPln = value * getNumericValue(inputs.gbpRate, 4.9);
+  } else if (fromCurrency === "SEK") {
+    valueInPln = value * getNumericValue(inputs.sekRate, 0.39);
   }
 
   if (toCurrency === "PLN") {
@@ -131,6 +137,9 @@ function convertCurrency(value, fromCurrency, toCurrency) {
   }
   if (toCurrency === "GBP") {
     return valueInPln / getNumericValue(inputs.gbpRate, 4.9);
+  }
+  if (toCurrency === "SEK") {
+    return valueInPln / getNumericValue(inputs.sekRate, 0.39);
   }
 
   return value;
@@ -145,6 +154,9 @@ function convertEurToCurrency(eurValue, currency) {
   }
   if (currency === "PLN") {
     return eurValue * getNumericValue(inputs.eurRate, 4.25);
+  }
+  if (currency === "SEK") {
+    return (eurValue * getNumericValue(inputs.eurRate, 4.25)) / getNumericValue(inputs.sekRate, 0.39);
   }
   return eurValue;
 }
