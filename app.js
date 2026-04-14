@@ -25,20 +25,20 @@ const SHIPPING_RATES = {
   BE: { currency: "EUR", rates: { 1: 4.76, 2: 4.76, 3: 4.76, 5: 8.07, 10: 8.44, 15: 10.46, 25: 11.8, 30: 12.38, 40: 15.87 } },
   IE: { currency: "PLN", rates: { 1: 28.36, 3: 28.36, 5: 28.36, 10: 32.26, 20: 40.77, 30: 47.4 } },
   UK: { currency: "PLN", rates: { 1: 55.46, 3: 55.46, 5: 55.46, 10: 65.18, 20: 79.06, 30: 90.72 } },
-  PL: { currency: "PLN", rates: { 1: 10, 2: 10, 3: 10, 5: 10, 10: 10, 15: 10, 20: 10, 25: 10, 30: 10, 40: 10 } },
+  PL: { currency: "PLN", rates: { 1: 6, 2: 6, 3: 6, 5: 6, 10: 6, 15: 6, 20: 6, 25: 6, 30: 6, 40: 6 } },
 };
 
 const MARKET_INFO = [
-  { code: "DE", name: "Niemcy", currency: "EUR" },
-  { code: "FR", name: "Francja", currency: "EUR" },
-  { code: "IT", name: "Włochy", currency: "EUR" },
-  { code: "ES", name: "Hiszpania", currency: "EUR" },
-  { code: "NL", name: "Niderlandy", currency: "EUR" },
-  { code: "BE", name: "Belgia", currency: "EUR" },
-  { code: "IE", name: "Irlandia", currency: "EUR" },
-  { code: "UK", name: "Wielka Brytania", currency: "GBP" },
-  { code: "PL", name: "Polska", currency: "PLN" },
-  { code: "SE", name: "Szwecja", currency: "SEK" },
+  { code: "DE", name: "Niemcy", currency: "EUR", courier: "GLS" },
+  { code: "FR", name: "Francja", currency: "EUR", courier: "GLS" },
+  { code: "IT", name: "Włochy", currency: "EUR", courier: "GLS" },
+  { code: "ES", name: "Hiszpania", currency: "EUR", courier: "GLS" },
+  { code: "NL", name: "Niderlandy", currency: "EUR", courier: "GLS" },
+  { code: "BE", name: "Belgia", currency: "EUR", courier: "GLS" },
+  { code: "IE", name: "Irlandia", currency: "EUR", courier: "UPS" },
+  { code: "UK", name: "Wielka Brytania", currency: "GBP", courier: "UPS" },
+  { code: "PL", name: "Polska", currency: "PLN", courier: "Easy Ship (InPost)" },
+  { code: "SE", name: "Szwecja", currency: "SEK", courier: "UPS" },
 ];
 
 const WEIGHT_OPTIONS = [1, 2, 3, 5, 10, 15, 20, 25, 30, 40];
@@ -317,6 +317,7 @@ function renderRows(rows) {
 
     tr.innerHTML = `
       <td class="market-cell"><strong>${row.name}</strong><span>${row.code}</span></td>
+      <td>${row.courier}</td>
       <td>${row.currency}</td>
       <td>${formatPercent(row.vatRate)}</td>
       <td>${shippingLabel}</td>

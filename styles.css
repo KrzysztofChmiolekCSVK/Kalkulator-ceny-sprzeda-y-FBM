@@ -301,7 +301,7 @@ thead th {
   color: var(--accent-dark);
 }
 
-thead th:nth-child(8) {
+thead th:nth-child(9) {
   background: #f4d6b6;
 }
 
