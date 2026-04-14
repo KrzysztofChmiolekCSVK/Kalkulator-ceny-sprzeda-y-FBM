@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon Kalkulator Marży</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-main">
+        <p class="eyebrow">Amazon EU + UK + PL</p>
+        <h1>Kalkulator ceny sprzedaży FBM przy zadanej marży</h1>
+        <p class="hero-copy">Jeden widok, wszystkie markety i gotowa cena brutto do wpisania w Amazon.</p>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-label">Założenia</div>
+        <div class="hero-assumptions">
+          <span>Koszty w PLN</span>
+          <span>Kursy EUR/GBP edytowalne</span>
+          <span>Zysk po VAT i prowizji</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="top-row">
+        <section class="panel controls-panel">
+          <div class="panel-header">
+            <h2>Parametry</h2>
+            <p>Jedna zmiana aktualizuje wszystkie markety jednocześnie.</p>
+          </div>
+
+          <div class="controls-grid">
+            <label class="field">
+              <span>Tryb kalkulacji</span>
+              <select id="calculationMode">
+                <option value="profit">Docelowy zysk kwotowy</option>
+                <option value="margin">Docelowa marża procentowa</option>
+              </select>
+            </label>
+
+            <label class="field field-priority">
+              <span id="targetValueLabel">Docelowy zysk (EUR)</span>
+              <input id="targetValue" type="number" min="0" step="0.01" value="10">
+            </label>
+
+            <label class="field field-priority">
+              <span>Waga przesyłki</span>
+              <select id="weightTier"></select>
+            </label>
+
+            <label class="field field-priority">
+              <span>Koszt produktu (PLN)</span>
+              <input id="productCostPln" type="number" min="0" step="0.01" value="35">
+            </label>
+
+            <label class="field">
+              <span>Koszt pakowania (PLN)</span>
+              <input id="packingCostPln" type="number" min="0" step="0.01" value="3.75">
+            </label>
+
+            <label class="field">
+              <span>Koszty inne (PLN)</span>
+              <input id="otherCostPln" type="number" min="0" step="0.01" value="0">
+            </label>
+
+            <label class="field">
+              <span>Kurs PLN → EUR</span>
+              <input id="eurRate" type="number" min="0.01" step="0.0001" value="4.2500">
+            </label>
+
+            <label class="field">
+              <span>Kurs PLN → GBP</span>
+              <input id="gbpRate" type="number" min="0.01" step="0.0001" value="4.9000">
+            </label>
+          </div>
+        </section>
+
+        <section class="panel summary-panel">
+          <div class="panel-header">
+            <h2>Podsumowanie globalne</h2>
+            <p>Stan bieżący</p>
+          </div>
+
+          <div class="summary-grid">
+            <article class="summary-card">
+              <span class="summary-label">Koszt bazowy</span>
+              <strong id="baseCostValue">0,00 PLN</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label">Wybrana waga</span>
+              <strong id="selectedWeightValue">do 1 kg</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label" id="goalSummaryLabel">Cel kalkulacji</span>
+              <strong id="goalSummaryValue">10,00 EUR zysku</strong>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel table-panel">
+        <div class="panel-header">
+          <h2>Wszystkie markety</h2>
+          <p>Cena sprzedaży brutto jest liczona tak, aby osiągnąć ustawiony cel po odjęciu VAT, prowizji i kosztów.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Market</th>
+                <th>Waluta</th>
+                <th>VAT</th>
+                <th>Wysyłka</th>
+                <th>Koszt całkowity</th>
+                <th>Cena netto</th>
+                <th>VAT w cenie</th>
+                <th>Cena brutto</th>
+                <th>Prowizja Amazon</th>
+                <th>Zysk</th>
+                <th>Marża</th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+          </table>
+        </div>
+
+        <div class="table-note">
+          VAT ustawiony jest według standardowych stawek dla danego kraju. Dla UK i części przedziałów wagowych
+          aplikacja dobiera najbliższy wyższy dostępny próg z Twojego cennika, czyli zgodnie z logiką „do X kg”.
+          W trybie zysku kwotowego wpisana wartość w EUR jest punktem odniesienia dla DE i jest przeliczana na GBP oraz PLN po ustawionych kursach.
+          Dla Francji, Włoch i Hiszpanii prowizja Amazon zawiera też `Digital Services Fee` liczone jako 3% referral fee.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
