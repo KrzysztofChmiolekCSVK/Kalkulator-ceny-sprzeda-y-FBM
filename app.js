@@ -81,6 +81,19 @@ function formatCurrency(value, currency) {
   }).format(value);
 }
 
+function formatCurrencyForGrossPrice(value, currency, marketCode) {
+  if (!Number.isFinite(value)) {
+    return "Brak wyniku";
+  }
+
+  if (marketCode === "IE" || marketCode === "UK") {
+    const symbol = currency === "GBP" ? "GBP" : currency;
+    return `${value.toFixed(2)} ${symbol}`;
+  }
+
+  return formatCurrency(value, currency);
+}
+
 function formatNumberForCopy(value) {
   if (!Number.isFinite(value)) {
     return "";
@@ -280,7 +293,9 @@ function renderRows(rows) {
     const shippingLabel = Number.isFinite(row.shippingAmount)
       ? `${safeValue(row.shippingAmount)} <span class="inline-hint">(do ${row.shippingTier} kg)</span>`
       : "Brak stawki";
-    const grossDisplay = safeValue(row.grossPrice);
+    const grossDisplay = Number.isFinite(row.grossPrice)
+      ? formatCurrencyForGrossPrice(row.grossPrice, row.currency, row.code)
+      : "Brak wyniku";
     const grossCopyValue = formatNumberForCopy(row.grossPrice);
     const copyButton = Number.isFinite(row.grossPrice)
       ? `<button class="copy-price-button" type="button" data-copy-value="${grossCopyValue}" aria-label="Kopiuj cenę brutto" title="Kopiuj cenę brutto">Kopiuj</button>`
