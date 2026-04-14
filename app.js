@@ -1,4 +1,3 @@
-const AMAZON_FEE_RATE = 0.15;
 const FR_DIGITAL_SERVICES_FEE_RATE = 0.03;
 const DIGITAL_SERVICES_FEE_MARKETS = new Set(["FR", "IT", "ES"]);
 
@@ -49,6 +48,7 @@ const inputs = {
   weightTier: document.querySelector("#weightTier"),
   productCostPln: document.querySelector("#productCostPln"),
   packingCostPln: document.querySelector("#packingCostPln"),
+  amazonFeeRate: document.querySelector("#amazonFeeRate"),
   otherCostPln: document.querySelector("#otherCostPln"),
   eurRate: document.querySelector("#eurRate"),
   gbpRate: document.querySelector("#gbpRate"),
@@ -240,7 +240,7 @@ function calculateMarketRow(market, globalInputs) {
   const baseCostsInMarketCurrency = convertPlnToCurrency(globalInputs.baseCostPln, market.currency);
   const shippingAmountInMarketCurrency = convertCurrency(shipping.amount, shipping.currency, market.currency);
   const totalCost = baseCostsInMarketCurrency + shippingAmountInMarketCurrency;
-  const referralFeeRate = AMAZON_FEE_RATE;
+  const referralFeeRate = globalInputs.amazonFeeRate;
   const digitalServicesFeeRate = DIGITAL_SERVICES_FEE_MARKETS.has(market.code)
     ? referralFeeRate * FR_DIGITAL_SERVICES_FEE_RATE
     : 0;
@@ -353,6 +353,7 @@ function render() {
     calculationMode: inputs.calculationMode.value,
     targetValue: getNumericValue(inputs.targetValue, 10),
     marginRate: getNumericValue(inputs.targetValue, 25) / 100,
+    amazonFeeRate: getNumericValue(inputs.amazonFeeRate, 15) / 100,
     weightTier: getNumericValue(inputs.weightTier, 1),
     baseCostPln:
       getNumericValue(inputs.productCostPln) +
