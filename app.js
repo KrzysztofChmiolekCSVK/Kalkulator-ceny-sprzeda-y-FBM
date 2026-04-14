@@ -205,7 +205,7 @@ function resolveShippingRate(marketCode, weight) {
 
   let amount = rateConfig.rates[matchedWeight];
   if (UPS_FUEL_MARKETS.has(marketCode)) {
-    const fuelRate = getNumericValue(inputs.upsFuelSurcharge, 30.5) / 100;
+    const fuelRate = getNumericValue(inputs.upsFuelSurcharge, 31.75) / 100;
     const deliveryFeePln = getNumericValue(inputs.upsDeliveryFeePln, 1.15);
     amount = amount + (amount * fuelRate) + deliveryFeePln;
   }
