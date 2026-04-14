@@ -276,7 +276,7 @@ function calculateMarketRow(market, globalInputs) {
   const digitalServicesFee = grossPrice * digitalServicesFeeRate;
   const amazonFee = referralFee + digitalServicesFee;
   const profit = netPrice - amazonFee - totalCost;
-  const margin = netPrice === 0 ? 0 : profit / netPrice;
+  const margin = grossPrice === 0 ? 0 : profit / grossPrice;
 
   return {
     ...market,
