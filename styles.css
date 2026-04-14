@@ -336,6 +336,32 @@ tbody tr:hover {
   font-weight: 700;
   color: var(--accent-dark);
   background: rgba(197, 92, 31, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.copy-price-button {
+  border: 1px solid rgba(197, 92, 31, 0.22);
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--accent-dark);
+  border-radius: 999px;
+  padding: 3px 8px;
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.copy-price-button:hover {
+  background: rgba(255, 246, 236, 1);
+}
+
+.copy-price-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(197, 92, 31, 0.14);
 }
 
 .profit-positive,

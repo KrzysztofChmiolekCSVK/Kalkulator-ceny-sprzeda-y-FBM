@@ -81,6 +81,13 @@ function formatCurrency(value, currency) {
   }).format(value);
 }
 
+function formatNumberForCopy(value) {
+  if (!Number.isFinite(value)) {
+    return "";
+  }
+  return value.toFixed(2).replace(".", ",");
+}
+
 function formatPercent(value) {
   return `${(value * 100).toFixed(2).replace(".", ",")}%`;
 }
@@ -273,6 +280,11 @@ function renderRows(rows) {
     const shippingLabel = Number.isFinite(row.shippingAmount)
       ? `${safeValue(row.shippingAmount)} <span class="inline-hint">(do ${row.shippingTier} kg)</span>`
       : "Brak stawki";
+    const grossDisplay = safeValue(row.grossPrice);
+    const grossCopyValue = formatNumberForCopy(row.grossPrice);
+    const copyButton = Number.isFinite(row.grossPrice)
+      ? `<button class="copy-price-button" type="button" data-copy-value="${grossCopyValue}" aria-label="Kopiuj cenę brutto" title="Kopiuj cenę brutto">Kopiuj</button>`
+      : "";
 
     tr.innerHTML = `
       <td class="market-cell"><strong>${row.name}</strong><span>${row.code}</span></td>
@@ -282,7 +294,7 @@ function renderRows(rows) {
       <td>${safeValue(row.totalCost)}</td>
       <td>${safeValue(row.netPrice)}</td>
       <td>${safeValue(row.vatAmount)}</td>
-      <td class="gross-price-cell">${safeValue(row.grossPrice)}</td>
+      <td class="gross-price-cell"><span>${grossDisplay}</span>${copyButton}</td>
       <td>${safeValue(row.amazonFee)}</td>
       <td class="${profitClass}">${safeValue(row.profit)}</td>
       <td class="${marginClass}">${safePercent}</td>
@@ -329,4 +341,31 @@ Object.values(inputs).forEach((input) => {
   input.addEventListener("input", render);
   input.addEventListener("change", render);
 });
+
+resultsBody.addEventListener("click", async (event) => {
+  const button = event.target.closest(".copy-price-button");
+  if (!button) {
+    return;
+  }
+
+  const value = button.dataset.copyValue ?? "";
+  if (!value) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(value);
+    const originalText = button.textContent;
+    button.textContent = "Skopiowano";
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 1200);
+  } catch {
+    button.textContent = "Blad";
+    setTimeout(() => {
+      button.textContent = "Kopiuj";
+    }, 1200);
+  }
+});
+
 render();
