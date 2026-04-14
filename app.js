@@ -37,7 +37,7 @@ const MARKET_INFO = [
   { code: "BE", name: "Belgia", currency: "EUR", courier: "GLS" },
   { code: "IE", name: "Irlandia", currency: "EUR", courier: "UPS" },
   { code: "UK", name: "Wielka Brytania", currency: "GBP", courier: "UPS" },
-  { code: "PL", name: "Polska", currency: "PLN", courier: "Easy Ship (InPost)" },
+  { code: "PL", name: "Polska", currency: "PLN", courier: "InPost (Easy Ship)" },
   { code: "SE", name: "Szwecja", currency: "SEK", courier: "UPS" },
 ];
 
