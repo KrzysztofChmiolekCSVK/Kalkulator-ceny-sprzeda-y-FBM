@@ -20,11 +20,11 @@ const SHIPPING_RATES = {
   ES: { currency: "EUR", rates: { 1: 5.99, 2: 5.99, 3: 6.81, 5: 8.1, 10: 14.73, 15: 19.94, 25: 20.88, 30: 21.34, 40: 29.14 } },
   NL: { currency: "EUR", rates: { 1: 5.0, 2: 5.0, 3: 5.0, 5: 8.07, 10: 8.44, 15: 10.46, 25: 11.8, 30: 12.38, 40: 15.87 } },
   DE: { currency: "EUR", rates: { 1: 3.8, 2: 4.1, 3: 4.1, 5: 5.6, 10: 5.89, 15: 7.18, 25: 7.18, 30: 7.18, 40: 7.18 } },
-  SE: { currency: "PLN", rates: { 1: 28.5, 3: 28.5, 5: 32.78, 10: 42.05, 20: 53.87, 30: 61.61 } },
+  SE: { currency: "PLN", rates: { 1: 20.96, 3: 20.96, 5: 24.24, 10: 31.34, 20: 40.4, 30: 46.33 } },
   IT: { currency: "EUR", rates: { 1: 6.21, 2: 6.21, 3: 6.35, 5: 10.41, 10: 10.68, 15: 12.37, 25: 12.37, 30: 12.37, 40: 19.49 } },
   BE: { currency: "EUR", rates: { 1: 4.76, 2: 4.76, 3: 4.76, 5: 8.07, 10: 8.44, 15: 10.46, 25: 11.8, 30: 12.38, 40: 15.87 } },
-  IE: { currency: "PLN", rates: { 1: 38.16, 3: 38.16, 5: 38.16, 10: 43.25, 20: 54.35, 30: 63.01 } },
-  UK: { currency: "PLN", rates: { 1: 73.53, 3: 73.53, 5: 73.53, 10: 86.21, 20: 104.32, 30: 119.54 } },
+  IE: { currency: "PLN", rates: { 1: 28.36, 3: 28.36, 5: 28.36, 10: 32.26, 20: 40.77, 30: 47.4 } },
+  UK: { currency: "PLN", rates: { 1: 55.46, 3: 55.46, 5: 55.46, 10: 65.18, 20: 79.06, 30: 90.72 } },
   PL: { currency: "PLN", rates: { 1: 10, 2: 10, 3: 10, 5: 10, 10: 10, 15: 10, 20: 10, 25: 10, 30: 10, 40: 10 } },
 };
 
@@ -53,7 +53,11 @@ const inputs = {
   eurRate: document.querySelector("#eurRate"),
   gbpRate: document.querySelector("#gbpRate"),
   sekRate: document.querySelector("#sekRate"),
+  upsFuelSurcharge: document.querySelector("#upsFuelSurcharge"),
+  upsDeliveryFeePln: document.querySelector("#upsDeliveryFeePln"),
 };
+
+const UPS_FUEL_MARKETS = new Set(["UK", "IE", "SE"]);
 
 const resultsBody = document.querySelector("#resultsBody");
 const baseCostValue = document.querySelector("#baseCostValue");
@@ -199,9 +203,16 @@ function resolveShippingRate(marketCode, weight) {
     };
   }
 
+  let amount = rateConfig.rates[matchedWeight];
+  if (UPS_FUEL_MARKETS.has(marketCode)) {
+    const fuelRate = getNumericValue(inputs.upsFuelSurcharge, 30.5) / 100;
+    const deliveryFeePln = getNumericValue(inputs.upsDeliveryFeePln, 1.15);
+    amount = amount + (amount * fuelRate) + deliveryFeePln;
+  }
+
   return {
     matchedWeight,
-    amount: rateConfig.rates[matchedWeight],
+    amount,
     currency: rateConfig.currency,
   };
 }
