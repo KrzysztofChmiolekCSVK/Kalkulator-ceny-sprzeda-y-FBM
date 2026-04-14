@@ -312,7 +312,7 @@ function renderRows(rows) {
       <td>${safeValue(row.totalCost)}</td>
       <td>${safeValue(row.netPrice)}</td>
       <td>${safeValue(row.vatAmount)}</td>
-      <td class="gross-price-cell"><span class="gross-price-value">${grossDisplay}</span>${copyButton}</td>
+      <td class="gross-price-cell"><div class="gross-price-content"><span class="gross-price-value">${grossDisplay}</span>${copyButton}</div></td>
       <td>${safeValue(row.amazonFee)}</td>
       <td class="${profitClass}">${safeValue(row.profit)}</td>
       <td class="${marginClass}">${safePercent}</td>

@@ -336,10 +336,14 @@ tbody tr:hover {
   font-weight: 700;
   color: var(--accent-dark);
   background: rgba(197, 92, 31, 0.1);
+}
+
+.gross-price-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  width: 100%;
 }
 
 .gross-price-value {
