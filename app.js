@@ -77,22 +77,15 @@ function populateWeightOptions() {
 }
 
 function formatCurrency(value, currency) {
-  return new Intl.NumberFormat("pl-PL", {
-    style: "currency",
-    currency,
+  return `${new Intl.NumberFormat("pl-PL", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(value);
+  }).format(value)} ${currency}`;
 }
 
 function formatCurrencyForGrossPrice(value, currency, marketCode) {
   if (!Number.isFinite(value)) {
     return "Brak wyniku";
-  }
-
-  if (marketCode === "IE" || marketCode === "UK") {
-    const symbol = currency === "GBP" ? "GBP" : currency;
-    return `${value.toFixed(2)} ${symbol}`;
   }
 
   return formatCurrency(value, currency);
