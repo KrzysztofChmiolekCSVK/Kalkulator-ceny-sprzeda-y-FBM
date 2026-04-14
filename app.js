@@ -94,9 +94,12 @@ function formatCurrencyForGrossPrice(value, currency, marketCode) {
   return formatCurrency(value, currency);
 }
 
-function formatNumberForCopy(value) {
+function formatNumberForCopy(value, marketCode) {
   if (!Number.isFinite(value)) {
     return "";
+  }
+  if (marketCode === "IE" || marketCode === "UK") {
+    return value.toFixed(2);
   }
   return value.toFixed(2).replace(".", ",");
 }
@@ -296,9 +299,9 @@ function renderRows(rows) {
     const grossDisplay = Number.isFinite(row.grossPrice)
       ? formatCurrencyForGrossPrice(row.grossPrice, row.currency, row.code)
       : "Brak wyniku";
-    const grossCopyValue = formatNumberForCopy(row.grossPrice);
+    const grossCopyValue = formatNumberForCopy(row.grossPrice, row.code);
     const copyButton = Number.isFinite(row.grossPrice)
-      ? `<button class="copy-price-button" type="button" data-copy-value="${grossCopyValue}" aria-label="Kopiuj cenę brutto" title="Kopiuj cenę brutto">Kopiuj</button>`
+      ? `<button class="copy-price-button" type="button" data-copy-value="${grossCopyValue}" aria-label="Kopiuj cenę brutto" title="Kopiuj cenę brutto">Copy</button>`
       : "";
 
     tr.innerHTML = `
@@ -309,7 +312,7 @@ function renderRows(rows) {
       <td>${safeValue(row.totalCost)}</td>
       <td>${safeValue(row.netPrice)}</td>
       <td>${safeValue(row.vatAmount)}</td>
-      <td class="gross-price-cell"><span>${grossDisplay}</span>${copyButton}</td>
+      <td class="gross-price-cell"><span class="gross-price-value">${grossDisplay}</span>${copyButton}</td>
       <td>${safeValue(row.amazonFee)}</td>
       <td class="${profitClass}">${safeValue(row.profit)}</td>
       <td class="${marginClass}">${safePercent}</td>
