@@ -181,6 +181,17 @@ h1 {
   font-weight: 500;
 }
 
+.field-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.field-link:hover {
+  color: var(--accent-dark);
+}
+
 .field-priority span {
   color: var(--accent-dark);
   font-weight: 700;
