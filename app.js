@@ -22,8 +22,8 @@ const SHIPPING_RATES = {
   SE: { currency: "PLN", rates: { 1: 20.96, 3: 20.96, 5: 24.24, 10: 31.34, 20: 40.4, 30: 46.33 } },
   IT: { currency: "EUR", rates: { 1: 6.21, 2: 6.21, 3: 6.35, 5: 10.41, 10: 10.68, 15: 12.37, 25: 12.37, 30: 12.37, 40: 19.49 } },
   BE: { currency: "EUR", rates: { 1: 4.76, 2: 4.76, 3: 4.76, 5: 8.07, 10: 8.44, 15: 10.46, 25: 11.8, 30: 12.38, 40: 15.87 } },
-  IE: { currency: "PLN", rates: { 1: 28.36, 3: 28.36, 5: 28.36, 10: 32.26, 20: 40.77, 30: 47.4 } },
-  UK: { currency: "PLN", rates: { 1: 55.46, 3: 55.46, 5: 55.46, 10: 65.18, 20: 79.06, 30: 90.72 } },
+  IE: { currency: "EUR", rates: { 1: 4.86, 2: 5.71, 3: 6.46, 5: 8.2, 10: 12.27, 15: 16.34, 20: 20.77, 25: 25.02, 30: 29.28 } },
+  UK: { currency: "EUR", rates: { 1: 4.86, 2: 5.71, 3: 6.46, 5: 8.2, 10: 12.27, 15: 16.34, 20: 20.77, 25: 25.02, 30: 29.28 } },
   PL: { currency: "PLN", rates: { 1: 5, 2: 5, 3: 5, 5: 5, 10: 5, 15: 5, 20: 5, 25: 5, 30: 5, 40: 5 } },
 };
 
@@ -34,13 +34,13 @@ const MARKET_INFO = [
   { code: "ES", name: "Hiszpania", currency: "EUR", courier: "GLS" },
   { code: "NL", name: "Niderlandy", currency: "EUR", courier: "GLS" },
   { code: "BE", name: "Belgia", currency: "EUR", courier: "GLS" },
-  { code: "IE", name: "Irlandia", currency: "EUR", courier: "UPS" },
-  { code: "UK", name: "Wielka Brytania", currency: "GBP", courier: "UPS" },
+  { code: "IE", name: "Irlandia", currency: "EUR", courier: "Royal Mail" },
+  { code: "UK", name: "Wielka Brytania", currency: "GBP", courier: "Royal Mail" },
   { code: "PL", name: "Polska", currency: "PLN", courier: "InPost (Easy Ship)" },
   { code: "SE", name: "Szwecja", currency: "SEK", courier: "UPS" },
 ];
 
-const WEIGHT_OPTIONS = [1, 2, 3, 5, 10, 15, 20, 25, 30, 40];
+const WEIGHT_OPTIONS = [1, 2, 3, 5, 10, 15, 20, 25, 30];
 
 const inputs = {
   calculationMode: document.querySelector("#calculationMode"),
@@ -57,7 +57,7 @@ const inputs = {
   upsDeliveryFeePln: document.querySelector("#upsDeliveryFeePln"),
 };
 
-const UPS_FUEL_MARKETS = new Set(["UK", "IE", "SE"]);
+const UPS_FUEL_MARKETS = new Set(["SE"]);
 
 const resultsBody = document.querySelector("#resultsBody");
 const baseCostValue = document.querySelector("#baseCostValue");
